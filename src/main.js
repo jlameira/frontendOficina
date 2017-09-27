@@ -11,13 +11,13 @@ require(`quasar/dist/quasar.${__THEME}.css`)
 // require(`quasar/dist/quasar.ie.${__THEME}.css`)
 
 import Vue from 'vue'
-import Quasar,* as All from 'quasar'
+import Quasar, * as All from 'quasar'
 import router from './router'
 import Vuelidate from 'vuelidate'
 
 Vue.config.productionTip = false
 Vue.use(Vuelidate)
-Vue.use(Quasar,{
+Vue.use(Quasar, {
   components: All,
   directives: All
 }) // Install Quasar Framework

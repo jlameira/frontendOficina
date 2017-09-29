@@ -15,6 +15,9 @@
         <q-card-main>
           <form>
             <q-field>
+              <q-input v-model="form.name" float-label="Nome" @blur="$v.form.name.$touch" @keyup.enter="submit" :error="$v.form.name.$error" />
+            </q-field>
+            <q-field>
               <q-input v-model="form.email" float-label="Email" @blur="$v.form.email.$touch" @keyup.enter="submit" :error="$v.form.email.$error" />
             </q-field>
 
@@ -55,6 +58,7 @@ export default {
   data() {
     return {
       form: {
+        name: '',
         email: '',
         password: '',
         confirm_password: ''
@@ -64,6 +68,7 @@ export default {
   },
   validations: {
     form: {
+      name: { required, name },
       email: { required, email },
       password: {
         required,
@@ -76,7 +81,7 @@ export default {
   },
   methods: {
     close() {
-      this.$router.push({ name: 'index' })
+      this.$router.push({ name: 'home' })
     },
     launch(url) {
       openURL(url)
@@ -92,11 +97,12 @@ export default {
         Toast.create('A senha deve conter letras Maiúscula, minúscula,número ou algum caracter especial .')
         return
       }
-      axios.post(`${BASE_URL}/signup`, { email: this.form.email, password: this.form.password, confirm_password: this.form.confirm_password })
+      axios.post(`${BASE_URL}/signup`, { name: this.form.name, email: this.form.email, password: this.form.password, confirm_password: this.form.confirm_password })
         .then(function(response) {
           console.log(response);
         })
-        .catch(function(error) {
+        .catch(function(error, err) {
+          debugger
           Toast.create.negative('não foi possível realizar o cadastro')
           console.log(error);
         });

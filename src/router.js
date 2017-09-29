@@ -6,7 +6,7 @@ Vue.use(VueRouter)
 function load(component) {
   // '@' is aliased to src/components
   return () =>
-    import (`components/${component}.vue`)
+    import (`@/${component}.vue`)
 }
 
 export default new VueRouter({
@@ -25,27 +25,33 @@ export default new VueRouter({
   routes: [{
       path: '/',
       component: load('Home'),
-      name: 'index'
-    }, {
+      name: 'home',
+      children: [{
+          path: '/repos',
+          component: load('Repositories'),
+          name: 'root'
+        },
+        {
+          path: '/details',
+          component: load('Details'),
+          name: 'details'
+        },
+        {
+          path: '/signin',
+          component: load('Signin'),
+          name: 'signin'
+        },
+        {
+          path: '/profile',
+          component: load('Profile'),
+          name: 'profile'
+        }
+      ]
+    },
+    {
       path: '/register',
       component: load('Register'),
       name: 'register'
-    },
-
-    {
-      path: '/repos',
-      component: load('Repositories'),
-      name: 'root'
-    },
-    {
-      path: '/details',
-      component: load('Details'),
-      name: 'details'
-    },
-    {
-      path: '/signin',
-      component: load('Signin'),
-      name: 'signin'
     },
     // Always leave this last one
     {

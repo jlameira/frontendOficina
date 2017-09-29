@@ -27,10 +27,13 @@ export default {
       axios.post(`${BASE_URL}/login`, { email: email, password: password })
         .then(function(response) {
           Toast.create.positive('Agora você está logado')
+          localStorage.setItem('user', response.data._id);
+          this.$router.push({ name: 'home' })
           console.log(response);
         })
         .catch(function(error) {
           Toast.create.negative('não foi possível realizar login, por favor verifique seu email ou password')
+          this.$router.push({ name: 'profile' })
 
           // this.$router.push({ name: 'index' })
         });
@@ -52,7 +55,8 @@ export default {
         }
       },
       onDismiss: () => {
-        this.$router.push({ name: 'index' })
+        debugger
+        this.$router.push({ name: 'home' })
       },
       buttons: [
         {

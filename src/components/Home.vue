@@ -11,32 +11,11 @@
         Registrar
       </q-btn>
     </q-toolbar>
-
-    <div>
-      <div class="layout-padding">
-        <div v-if="!authenticated">
-          <div class="column items-center">
-            <div class="auto">
-              <h3>
-                </br>
-                <router-link to="/signin">Sign In</router-link> ou
-                <router-link to="/register">Registre-se</router-link>
-                </br>
-                </br>
-              </h3>
-            </div>
-          </div>
-        </div>
-        <div v-else class="column items-center">
-          <h5>
-            To make this demo work correctly first register your avatar to
-            <a href="https://www.gravatar.com">https://www.gravatar.com</a>
-            then go to the
-            <router-link to="/chat">Chat</router-link>
-          </h5>
-        </div>
-      </div>
+    <div slot="left" ref="menu" v-if="authenticated">
     </div>
+
+    <!-- sub-routes -->
+    <router-view :user="user"></router-view>
 
   </q-layout>
 </template>
@@ -66,7 +45,14 @@ export default {
   computed: {
     authenticated() {
       return this.$data.user !== null
+
+
     }
+  },
+  mounted() {
+    debugger
+    this.$router.push({ name: 'profile' })
+    this.$data.user = localStorage.getItem('user')
   },
   methods: {
     goTo(route) {
@@ -82,6 +68,8 @@ export default {
         this.enableContextMenu = false;
       }
     }
+  },
+  beforeDestroy() {
   }
 }
 </script>

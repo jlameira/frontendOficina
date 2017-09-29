@@ -24,19 +24,7 @@ export default {
       // })
     },
     login(email, password) {
-      axios.post(`${BASE_URL}/login`, { email: email, password: password })
-        .then(function(response) {
-          Toast.create.positive('Agora você está logado')
-          localStorage.setItem('user', response.data._id);
-          this.$router.push({ name: 'home' })
-          console.log(response);
-        })
-        .catch(function(error) {
-          Toast.create.negative('não foi possível realizar login, por favor verifique seu email ou password')
-          this.$router.push({ name: 'profile' })
-
-          // this.$router.push({ name: 'index' })
-        });
+      return axios.post(`${BASE_URL}/login`, { email: email, password: password });
     }
   },
   mounted() {
@@ -55,7 +43,6 @@ export default {
         }
       },
       onDismiss: () => {
-        debugger
         this.$router.push({ name: 'home' })
       },
       buttons: [
@@ -76,14 +63,22 @@ export default {
                 })
             }
             else {
+              let app = this;
               this.login(data.email, data.password)
-              // .then(_ => {
-              //   Toast.create.positive('You are now logged in')
-              // })
-              // .catch(_ => {
-              //   Toast.create.negative('Cannot sign in, please check your e-mail or password')
-              //   this.$router.push({ name: 'home' })
-              // })
+                .then((response) => {
+                  Toast.create.positive('Agora você está logado');
+                  localStorage.setItem('user', response.data.name);
+                  localStorage.setItem('token', response.data.token);
+                  console.log(response);
+                })
+                .then(resp => {
+                  debugger
+                  this.$router.push({ name: 'home' })
+                })
+                .catch(_ => {
+                  Toast.create.negative('não foi possível realizar login, por favor verifique seu email ou password')
+                  this.$router.push({ name: 'home' })
+                });
             }
           }
         }

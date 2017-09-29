@@ -25,7 +25,7 @@ export default new VueRouter({
   routes: [{
       path: '/',
       component: load('Home'),
-      name: 'home',
+      name: 'index',
       children: [{
           path: '/repos',
           component: load('Repositories'),
@@ -37,14 +37,9 @@ export default new VueRouter({
           name: 'details'
         },
         {
-          path: '/signin',
-          component: load('Signin'),
-          name: 'signin'
-        },
-        {
-          path: '/profile',
+          path: '/home',
           component: load('Profile'),
-          name: 'profile'
+          name: 'home'
         }
       ]
     },
@@ -52,6 +47,11 @@ export default new VueRouter({
       path: '/register',
       component: load('Register'),
       name: 'register'
+    },
+    {
+      path: '/signin',
+      component: load('Signin'),
+      name: 'signin'
     },
     // Always leave this last one
     {
